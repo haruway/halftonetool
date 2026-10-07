@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Halftone — Harness</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside id="panel">
+    <header>
+      <h1>Halftone</h1>
+      <span class="tag">harness · fase 3</span>
+    </header>
+
+    <section>
+      <h2>Imagem</h2>
+      <label class="drop" id="drop">
+        <input type="file" id="file" accept="image/*">
+        <span>Arraste uma imagem ou clique</span>
+      </label>
+      <select id="testImages"><option value="">Imagens de teste…</option></select>
+      <div class="meta" id="imgInfo">—</div>
+    </section>
+
+    <section>
+      <h2>Presets</h2>
+      <div id="presets" class="presets"></div>
+      <div class="buttons">
+        <button id="savePreset">Salvar atual</button>
+        <button id="exportPreset">Exportar JSON</button>
+        <button id="importPreset">Importar JSON</button>
+      </div>
+      <input type="file" id="importFile" accept=".json,application/json" hidden>
+    </section>
+
+    <section>
+      <h2>Padrão</h2>
+      <div id="gallery" class="gallery"></div>
+      <div class="row"><label>Célula (px)</label><input type="range" id="cellSize" min="3" max="80" step="0.5" value="12"><output for="cellSize"></output></div>
+      <div class="row"><label>Rugosidade</label><input type="range" id="roughness" min="0" max="1" step="0.01" value="0"><output for="roughness"></output></div>
+      <div class="row"><label>Distorção</label><input type="range" id="distortion" min="0" max="1" step="0.01" value="0"><output for="distortion"></output></div>
+      <div class="row"><label>Rotação</label><input type="range" id="rotation" min="-90" max="90" step="1" value="0"><output for="rotation"></output></div>
+      <div class="row"><label>Espaçamento de ângulo</label><input type="range" id="angleStep" min="0" max="90" step="1" value="30"><output for="angleStep"></output></div>
+      <div class="row"><label>Suavização do detalhe</label><input type="range" id="prefilter" min="0" max="1" step="0.05" value="0.4"><output for="prefilter"></output></div>
+      <div class="group" id="waveGroup">
+        <div class="row"><label>Altura da onda</label><input type="range" id="waveAmp" min="0" max="3" step="0.05" value="0.8"><output for="waveAmp"></output></div>
+        <div class="row"><label>Comprimento da onda</label><input type="range" id="waveLen" min="2" max="40" step="0.5" value="8"><output for="waveLen"></output></div>
+      </div>
+      <div class="group" id="fanGroup">
+        <div class="row"><label>Centro do leque X</label><input type="range" id="fanX" min="-1" max="2" step="0.01" value="0.5"><output for="fanX"></output></div>
+        <div class="row"><label>Centro do leque Y</label><input type="range" id="fanY" min="-1" max="2" step="0.01" value="1.4"><output for="fanY"></output></div>
+      </div>
+      <div class="row seed"><label>Seed</label><input type="number" id="seed" min="0" step="1" value="1"><button id="dice" title="Seed aleatória">🎲</button></div>
+      <div class="row check"><label><input type="checkbox" id="antialias" checked> Anti-aliasing</label></div>
+    </section>
+
+    <section>
+      <h2>Tintas <span class="hint">a primeira é impressa por baixo</span></h2>
+      <select id="inkSet"></select>
+      <div id="inks"></div>
+      <div class="buttons">
+        <button id="addInk">+ Tinta</button>
+        <button id="sortInks" title="Imprime da mais clara para a mais escura">Ordenar claro → escuro</button>
+      </div>
+      <div class="row sel"><label>Separação</label>
+        <select id="sepMode">
+          <option value="solve">Color match (qualquer tinta)</option>
+          <option value="cmyk">CMYK clássica (com GCR)</option>
+        </select>
+      </div>
+      <div class="group" id="cmykGroup">
+        <div class="row"><label>Geração de preto (GCR)</label><input type="range" id="gcr" min="0" max="1" step="0.05" value="0.7"><output for="gcr"></output></div>
+        <div class="row"><label>Início do preto</label><input type="range" id="blackStart" min="0" max="0.9" step="0.05" value="0.15"><output for="blackStart"></output></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Papel</h2>
+      <div class="swatches" id="paperSwatches"></div>
+      <div class="row"><label>Cor</label><input type="color" id="paper" value="#ffffff"><span class="hex" id="paperHex">#FFFFFF</span></div>
+    </section>
+
+    <section>
+      <h2>Envelhecimento</h2>
+      <div class="row"><label>Textura do papel</label><input type="range" id="agePaper" min="0" max="1" step="0.01" value="0"><output for="agePaper"></output></div>
+      <div class="row"><label>Fibras</label><input type="range" id="ageFibers" min="0" max="1" step="0.01" value="0"><output for="ageFibers"></output></div>
+      <div class="row"><label>Poeira e arranhões</label><input type="range" id="ageDust" min="0" max="1" step="0.01" value="0"><output for="ageDust"></output></div>
+      <div class="row"><label>Desbotamento</label><input type="range" id="ageFade" min="0" max="1" step="0.01" value="0"><output for="ageFade"></output></div>
+      <div class="row"><label>Desregistro</label><input type="range" id="ageDrift" min="0" max="1" step="0.01" value="0"><output for="ageDrift"></output></div>
+      <div class="row"><label>Ganho de ponto</label><input type="range" id="ageGain" min="0" max="1" step="0.01" value="0"><output for="ageGain"></output></div>
+    </section>
+
+    <section>
+      <h2>Curva de entrada</h2>
+      <div class="row"><label>Brilho</label><input type="range" id="brightness" min="-0.5" max="0.5" step="0.01" value="0"><output for="brightness"></output></div>
+      <div class="row"><label>Contraste</label><input type="range" id="contrast" min="-0.9" max="0.9" step="0.01" value="0"><output for="contrast"></output></div>
+      <div class="row"><label>Gama</label><input type="range" id="gamma" min="0.3" max="3" step="0.01" value="1"><output for="gamma"></output></div>
+    </section>
+
+    <section>
+      <h2>Exportar (resolução total)</h2>
+      <div class="buttons">
+        <button id="exportComposite">PNG composto</button>
+        <button id="exportPlates">Chapas (PNG)</button>
+      </div>
+      <button class="ghost" id="reset">Restaurar padrões</button>
+    </section>
+  </aside>
+
+  <main>
+    <div id="toolbar">
+      <div class="seg" id="view">
+        <button data-v="composite" class="on">Composto</button>
+        <button data-v="original">Original</button>
+      </div>
+      <div class="seg" id="plateView"></div>
+      <div class="seg" id="zoom">
+        <button data-z="fit" class="on">Ajustar</button>
+        <button data-z="1">100%</button>
+        <button data-z="2">200%</button>
+        <button data-z="4">400%</button>
+      </div>
+      <label class="res">Preview
+        <select id="previewMax">
+          <option value="1200">1200 px</option>
+          <option value="2000" selected>2000 px</option>
+          <option value="0">Original</option>
+        </select>
+      </label>
+      <span id="status">Carregue uma imagem</span>
+    </div>
+    <div id="stage"><canvas id="view-canvas"></canvas></div>
+  </main>
+
+  <script src="../engine/presets.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

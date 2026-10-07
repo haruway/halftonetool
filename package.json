@@ -1,0 +1,17 @@
+{
+  "name": "halftonetool",
+  "version": "0.3.0",
+  "private": true,
+  "description": "Motor de halftone de impressão real (padrões orgânicos, tintas customizadas, envelhecimento) para um plugin UXP do Photoshop.",
+  "main": "engine/index.js",
+  "scripts": {
+    "test": "SKIP_IMAGES=1 node engine/test/run.js",
+    "test:imagens": "node engine/test/run.js",
+    "cartelas": "node engine/test/make-charts.js",
+    "imagens-readme": "node engine/test/make-readme-images.js",
+    "harness": "python3 -m http.server 8765"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

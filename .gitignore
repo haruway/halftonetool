@@ -1,0 +1,22 @@
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Configurações locais do editor
+.vscode/
+*.code-workspace
+
+# Skills de terceiros usadas só no desenvolvimento (têm licença própria)
+adobe-plugin-development/
+find-skills/
+
+# Imagens de teste que não podem ir para o repositório público
+test-images/macos/
+test-images/personal/download.png
+
+# Saídas dos testes do motor
+engine/test/out/
+
+# Node (se um dia houver dependências)
+node_modules/
+npm-debug.log*

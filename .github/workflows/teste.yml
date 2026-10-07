@@ -1,0 +1,17 @@
+# Roda o teste de precisão de tom do motor a cada push e pull request.
+name: Teste do motor
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tom:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: Precisão de tom (todos os padrões, células de 3 a 24 px)
+        run: npm test
